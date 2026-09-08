@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "io.github.ouj4k2q5.minlauncher"
-        minSdkVersion 24
+        minSdkVersion 30
         targetSdkVersion 36
         versionCode 112
         versionName "v6.9.1"
