@@ -3,7 +3,6 @@
     <string name="app">Aplikasi</string>
     <string name="set_as_default_launcher">Tetapkan sebagai peluncur default</string>
     <string name="set_as_default_launcher_u"><u>Tetapkan sebagai peluncur default</u></string>
-    <string name="set_as_default_launcher_first">Tetapkan sebagai peluncur default</string>
     <string name="app_text_color">Warna teks</string>
     <string name="double_tap_to_lock_screen">Ketuk dua kali untuk mengunci</string>
     <string name="admin_permission_message">Olauncher berjanji untuk menggunakan izin layar kunci secara bertanggung jawab. Olauncher tidak mengumpulkan atau membagikan data apa pun.</string>
@@ -19,7 +18,6 @@
     <string name="donate">Donasi</string>
     <string name="swipe_up_for_apps">1. Geser ke atas untuk semua aplikasi\n2. Tekan lama di mana saja untuk pengaturan</string>
     <string name="apps_on_home_screen">Aplikasi di layar awal</string>
-    <string name="daily_wallpaper_update">Wallpaper baru setiap hari</string>
     <string name="left">Kiri</string>
     <string name="right">kanan</string>
     <string name="center">Tengah</string>
@@ -102,8 +100,6 @@
     <string name="swipe_right_app_enabled">Aplikasi geser ke kanan diaktifkan</string>
     <string name="swipe_left_app_disabled">Aplikasi geser ke kiri dinonaktifkan</string>
     <string name="swipe_right_app_disabled">Aplikasi geser ke kanan dinonaktifkan</string>
-    <string name="your_wallpaper_will_update_shortly">Wallpaper Anda akan segera diperbarui</string>
-    <string name="olauncher_is_not_default_launcher">Olauncher bukan peluncur default.\nPembaruan wallpaper harian mungkin gagal.</string>
     <string name="long_press_to_enable">Tekan lama untuk mengaktifkan</string>
     <string name="no_hidden_apps">Aplikasi tersembunyi tidak ada</string>
     <string name="hidden_apps">Aplikasi tersembunyi</string>

@@ -3,7 +3,6 @@
     <string name="app">Aplicativo</string>
     <string name="set_as_default_launcher">Definir como launcher padrão</string>
     <string name="set_as_default_launcher_u"><u>Definir como launcher padrão</u></string>
-    <string name="set_as_default_launcher_first">Definir como launcher padrão</string>
     <string name="app_text_color">Cor do texto</string>
     <string name="double_tap_to_lock_screen">Toque duplo para bloquear</string>
     <string name="admin_permission_message">Olauncher promete usar a permissão de bloqueio de telemóvel de forma responsável. Olauncher não faz coleção ou compartilha quaisquer dados.</string>
@@ -19,7 +18,6 @@
     <string name="donate">Fazer donativo</string>
     <string name="swipe_up_for_apps">1. Deslize para cima para ver todos os aplicativos\n2. Pressione continuamente em qualquer ponto do ecrã para aceder às configurações</string>
     <string name="apps_on_home_screen">Aplicativos na home</string>
-    <string name="daily_wallpaper_update">Novo fundo de ecrã diariamente</string>
     <string name="left">Esquerda</string>
     <string name="right">Direita</string>
     <string name="center">Centro</string>
@@ -104,8 +102,6 @@
     <string name="swipe_right_app_enabled">Deslizar para a direita para abrir aplicativo ativado</string>
     <string name="swipe_left_app_disabled">Deslizar para a esquerda para abrir aplicativo desativado</string>
     <string name="swipe_right_app_disabled">Deslizar para a direita para abrir aplicativo desativado</string>
-    <string name="your_wallpaper_will_update_shortly">Seu fundo de ecrã será atualizado em breve</string>
-    <string name="olauncher_is_not_default_launcher">Olauncher não é launcher padrão. A atualização diária do fundo de ecrã pode falhar.</string>
     <string name="long_press_to_enable">Pressione por muito tempo para ativar</string>
     <string name="no_hidden_apps">Sem aplicativos ocultos</string>
     <string name="hidden_apps">Aplicativos ocultos</string>

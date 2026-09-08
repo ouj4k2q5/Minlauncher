@@ -3,7 +3,6 @@
     <string name="app">アプリ</string>
     <string name="set_as_default_launcher">デフォルトのランチャーとして設定</string>
     <string name="set_as_default_launcher_u"><u>デフォルトのランチャーとして設定</u></string>
-    <string name="set_as_default_launcher_first">デフォルトのランチャーとして設定</string>
     <string name="_0">〇</string>
     <string name="_1">一</string>
     <string name="_2">二</string>
@@ -18,8 +17,6 @@
     <string name="cool">いいね！</string>
 
     <string name="tip_start_typing_for_rename">ヒント: アプリの RENAME オプションの入力を開始します</string>
-    <string name="your_wallpaper_will_update_shortly">壁紙は間もなく更新されます</string>
-    <string name="olauncher_is_not_default_launcher">Olauncher はデフォルトのランチャーではありません。 毎日の壁紙の更新に失敗する場合があります。</string>
     <string name="long_press_to_enable">長押しして有効にします</string>
     <string name="no_hidden_apps">隠れたアプリはありません</string>
     <string name="hidden_apps">隠しアプリ</string>
@@ -64,7 +61,6 @@
     <string name="donate">寄付</string>
     <string name="swipe_up_for_apps">1. 上にスワイプしてすべてのアプリを表示します\n2. 設定を行うには任意の場所を長押しします</string>
     <string name="apps_on_home_screen">ホーム画面のアプリ</string>
-    <string name="daily_wallpaper_update">毎日新しい壁紙</string>
     <string name="left">左</string>
     <string name="right">右</string>
     <string name="center">中心</string>

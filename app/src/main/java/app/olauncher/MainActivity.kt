@@ -37,7 +37,7 @@ import app.olauncher.helper.isOlauncherDefault
 import app.olauncher.helper.isTablet
 import app.olauncher.helper.openUrl
 import app.olauncher.helper.resetLauncherViaFakeActivity
-import app.olauncher.helper.setPlainWallpaper
+import app.olauncher.helper.setPlainWallpaperByTheme
 import app.olauncher.helper.showLauncherSelector
 import app.olauncher.helper.showToast
 import kotlinx.coroutines.Job
@@ -191,9 +191,8 @@ class MainActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         AppCompatDelegate.setDefaultNightMode(prefs.appTheme)
-        if (prefs.dailyWallpaper && AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            setPlainWallpaper()
-            viewModel.setWallpaperWorker()
+        if (prefs.solidWallpaper && AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+            setPlainWallpaperByTheme(this, prefs.appTheme)
             recreate()
         }
     }
@@ -267,11 +266,6 @@ class MainActivity : AppCompatActivity() {
             navController.popBackStack(R.id.mainFragment, false)
     }
 
-    private fun setPlainWallpaper() {
-        if (this.isDarkThemeOn())
-            setPlainWallpaper(this, android.R.color.black)
-        else setPlainWallpaper(this, android.R.color.white)
-    }
 
     private fun openLauncherChooser(resetFailed: Boolean) {
         if (resetFailed) {

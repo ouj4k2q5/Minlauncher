@@ -510,16 +510,16 @@
                     android:animateLayoutChanges="true">
 
                     <TextView
-                        android:id="@+id/dailyWallpaperUrl"
+                        android:id="@+id/solidWallpaperLabel"
                         style="@style/TextSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
-                        android:text="@string/daily_wallpaper_update" />
+                        android:text="@string/solid_wallpaper" />
 
                     <TextView
-                        android:id="@+id/dailyWallpaper"
+                        android:id="@+id/solidWallpaper"
                         style="@style/TextSmallBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

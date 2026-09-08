@@ -35,7 +35,7 @@ import app.olauncher.helper.isOlauncherDefault
 import app.olauncher.helper.isTablet
 import app.olauncher.helper.openAppInfo
 import app.olauncher.helper.openUrl
-import app.olauncher.helper.setPlainWallpaper
+import app.olauncher.helper.setPlainWallpaperByTheme
 import app.olauncher.helper.showToast
 import app.olauncher.listener.DeviceAdmin
 
@@ -109,8 +109,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
             // R.id.homeButtonRecents -> toggleHomeButtonRecents()
             R.id.autoShowKeyboard -> toggleKeyboardText()
             R.id.homeAppsNum -> binding.appsNumSelectLayout.visibility = View.VISIBLE
-            R.id.dailyWallpaperUrl -> requireContext().openUrl(prefs.dailyWallpaperUrl)
-            R.id.dailyWallpaper -> toggleDailyWallpaperUpdate()
+            R.id.solidWallpaper -> toggleSolidWallpaper()
             R.id.alignment -> binding.alignmentSelectLayout.visibility = View.VISIBLE
             R.id.alignmentLeft -> viewModel.updateHomeAlignment(Gravity.START)
             R.id.alignmentCenter -> viewModel.updateHomeAlignment(Gravity.CENTER)
@@ -162,7 +161,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
                 requireContext().showToast(getString(R.string.alignment_changed))
             }
 
-            R.id.dailyWallpaper -> removeWallpaper()
+            R.id.solidWallpaper -> removeWallpaper()
             R.id.appThemeText -> {
                 binding.appThemeSelectLayout.visibility = View.VISIBLE
                 binding.themeSystem.visibility = View.VISIBLE
@@ -186,8 +185,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
         // binding.homeButtonRecents.setOnClickListener(this)
         binding.homeAppsNum.setOnClickListener(this)
         binding.screenTimeOnOff.setOnClickListener(this)
-        binding.dailyWallpaperUrl.setOnClickListener(this)
-        binding.dailyWallpaper.setOnClickListener(this)
+        binding.solidWallpaper.setOnClickListener(this)
         binding.alignment.setOnClickListener(this)
         binding.alignmentLeft.setOnClickListener(this)
         binding.alignmentCenter.setOnClickListener(this)
@@ -226,7 +224,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
         binding.textSizeMinus.setOnClickListener(this)
         binding.textSizePlus.setOnClickListener(this)
 
-        binding.dailyWallpaper.setOnLongClickListener(this)
+        binding.solidWallpaper.setOnLongClickListener(this)
         binding.alignment.setOnLongClickListener(this)
         binding.appThemeText.setOnLongClickListener(this)
         binding.swipeLeftApp.setOnLongClickListener(this)
@@ -391,38 +389,25 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
         }
     }
 
+    /**
+     * Long press on the wallpaper row: force the theme to one the solid wallpaper suits
+     * and repaint it, then switch the toggle off.
+     */
     private fun removeWallpaper() {
-        if (requireContext().isEinkDisplay()) {
-            prefs.appTheme = AppCompatDelegate.MODE_NIGHT_NO
-            setPlainWallpaper(requireContext(), android.R.color.white)
-        } else {
-            prefs.appTheme = AppCompatDelegate.MODE_NIGHT_YES
-            setPlainWallpaper(requireContext(), android.R.color.black)
-        }
-        if (!prefs.dailyWallpaper) return
-        prefs.dailyWallpaper = false
-        populateWallpaperText()
-        viewModel.cancelWallpaperWorker()
-    }
-
-    private fun toggleDailyWallpaperUpdate() {
-        if (prefs.dailyWallpaper.not() && prefs.appTheme == AppCompatDelegate.MODE_NIGHT_YES && viewModel.isOlauncherDefault.value == false) {
-            requireContext().showToast(R.string.set_as_default_launcher_first)
-            return
-        }
-        prefs.dailyWallpaper = !prefs.dailyWallpaper
-        populateWallpaperText()
-        if (prefs.dailyWallpaper) {
-            viewModel.setWallpaperWorker()
-            showWallpaperToasts()
-        } else viewModel.cancelWallpaperWorker()
-    }
-
-    private fun showWallpaperToasts() {
-        if (isOlauncherDefault(requireContext()))
-            requireContext().showToast(getString(R.string.your_wallpaper_will_update_shortly))
+        prefs.appTheme = if (requireContext().isEinkDisplay())
+            AppCompatDelegate.MODE_NIGHT_NO
         else
-            requireContext().showToast(getString(R.string.olauncher_is_not_default_launcher), Toast.LENGTH_LONG)
+            AppCompatDelegate.MODE_NIGHT_YES
+        setPlainWallpaperByTheme(requireContext(), prefs.appTheme)
+        prefs.solidWallpaper = false
+        populateWallpaperText()
+    }
+
+    private fun toggleSolidWallpaper() {
+        prefs.solidWallpaper = !prefs.solidWallpaper
+        populateWallpaperText()
+        if (prefs.solidWallpaper)
+            setPlainWallpaperByTheme(requireContext(), prefs.appTheme)
     }
 
     private fun updateHomeAppsNum(num: Int) {
@@ -477,24 +462,10 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
 
     private fun setAppTheme(theme: Int) {
         if (AppCompatDelegate.getDefaultNightMode() == theme) return
-        if (prefs.dailyWallpaper) {
-            setPlainWallpaper(theme)
-            viewModel.setWallpaperWorker()
-        }
+        if (prefs.solidWallpaper) setPlainWallpaperByTheme(requireContext(), theme)
         requireActivity().recreate()
     }
 
-    private fun setPlainWallpaper(appTheme: Int) {
-        when (appTheme) {
-            AppCompatDelegate.MODE_NIGHT_YES -> setPlainWallpaper(requireContext(), android.R.color.black)
-            AppCompatDelegate.MODE_NIGHT_NO -> setPlainWallpaper(requireContext(), android.R.color.white)
-            else -> {
-                if (requireContext().isDarkThemeOn())
-                    setPlainWallpaper(requireContext(), android.R.color.black)
-                else setPlainWallpaper(requireContext(), android.R.color.white)
-            }
-        }
-    }
 
     private fun populateAppThemeText(appTheme: Int = prefs.appTheme) {
         when (appTheme) {
@@ -533,8 +504,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
     }
 
     private fun populateWallpaperText() {
-        if (prefs.dailyWallpaper) binding.dailyWallpaper.text = getString(R.string.on)
-        else binding.dailyWallpaper.text = getString(R.string.off)
+        binding.solidWallpaper.text = getString(if (prefs.solidWallpaper) R.string.on else R.string.off)
     }
 
     private fun updateHomeBottomAlignment() {

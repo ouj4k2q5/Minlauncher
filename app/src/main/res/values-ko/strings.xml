@@ -2,7 +2,6 @@
     <string name="app">앱</string>
     <string name="set_as_default_launcher">기본 런처로 설정</string>
     <string name="set_as_default_launcher_u"><u>기본 런처로 설정</u></string>
-    <string name="set_as_default_launcher_first">먼저 Olauncher를 기본으로 설정하세요</string>
     <string name="app_text_color">텍스트 색상</string>
     <string name="double_tap_to_lock_screen">화면을 두 번 탭하여 잠금</string>
     <string name="home_button_show_recents">홈 버튼으로 최근 앱 보기</string>
@@ -18,7 +17,6 @@
     <string name="donate">후원</string>
     <string name="swipe_up_for_apps">1. 위로 밀어 모든 앱 보기\n2. 아무 곳이나 길게 눌러 설정</string>
     <string name="apps_on_home_screen">홈 화면의 앱</string>
-    <string name="daily_wallpaper_update">매일 새로운 배경화면</string>
     <string name="left">왼쪽</string>
     <string name="right">오른쪽</string>
     <string name="center">가운데</string>
@@ -98,8 +96,6 @@
     <string name="swipe_right_app_enabled">오른쪽으로 넘길 앱 활성화됨</string>
     <string name="swipe_left_app_disabled">왼쪽으로 넘길 앱 비활성화됨</string>
     <string name="swipe_right_app_disabled">오른쪽으로 넘길 앱 비활성화됨</string>
-    <string name="your_wallpaper_will_update_shortly">곧 배경화면이 업데이트됩니다</string>
-    <string name="olauncher_is_not_default_launcher">Olauncher가 기본 런처가 아닙니다. 배경화면 업데이트가 실패할 수 있습니다.</string>
     <string name="long_press_to_enable">활성화하려면 길게 누르세요</string>
     <string name="no_hidden_apps">숨긴 앱 없음</string>
     <string name="hidden_apps">숨긴 앱</string>
