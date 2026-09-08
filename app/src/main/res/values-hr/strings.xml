@@ -13,7 +13,6 @@
     <string name="black">Crno</string>
     <string name="white">Bijelo</string>
     <string name="change_default_launcher">Promijeni zadani pokretač</string>
-    <string name="privacy">Privatnost</string>
     <string name="follow">Prati</string>
     <string name="email">E-pošta</string>
     <string name="donate">Doniraj</string>
@@ -87,7 +86,6 @@
     <string name="home_button_show_recents">Tipka za početnu stranicu za nedavne</string>
     <string name="enable">Omogući</string>
     <string name="disable">Onemogući</string>
-    <string name="not_working"><u>Ne radi?</u></string>
     <string name="info">Informacije</string>
     <string name="delete">Izbriši</string>
     <string name="text_size">Veličina teksta</string>
@@ -114,7 +112,6 @@
     <string name="hidden_apps">Skrivene aplikacije</string>
     <string name="adapter_show">Prikaži</string>
     <string name="adapter_hide">Sakrij</string>
-    <string name="about_olauncher">O Olauncher-u i ČPP</string>
     <string name="alignment_changed">Poravnanje promijenjeno ✅</string>
     <string name="home_screen">Početni ekran</string>
     <string name="notification_bar">Traka obavijesti</string>

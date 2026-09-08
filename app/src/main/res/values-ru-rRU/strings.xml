@@ -13,7 +13,6 @@
     <string name="black">Черный</string>
     <string name="white">Белый</string>
     <string name="change_default_launcher">Изменить лаунчер по умолчанию</string>
-    <string name="privacy">Конфиденциальность</string>
     <string name="follow">Перейти</string>
     <string name="email">Электронная почта</string>
 
@@ -86,7 +85,6 @@
     <string name="home_button_show_recents">Кнопка домой для недавних</string>
     <string name="enable">Включить</string>
     <string name="disable">Выключить</string>
-    <string name="not_working"><u>Не работает?</u></string>
     <string name="info">Информация</string>
     <string name="delete">Удалить</string>
     <string name="text_size">Размер текста</string>
@@ -113,7 +111,6 @@
     <string name="hidden_apps">Скрытые приложения</string>
     <string name="adapter_show">Показать</string>
     <string name="adapter_hide">Скрыть</string>
-    <string name="about_olauncher">О нас Olauncher</string>
     <string name="screen_time">Время на экране</string>
     <string name="learn_more">Узнать больше</string>
     <string name="alignment_changed">Выравнивание изменено ✅</string>

@@ -13,7 +13,6 @@
     <string name="black">Hitam</string>
     <string name="white">Putih</string>
     <string name="change_default_launcher">Ubah peluncur default</string>
-    <string name="privacy">Privasi</string>
     <string name="follow">Ikuti</string>
     <string name="email">Surel</string>
 
@@ -84,7 +83,6 @@
     <string name="home_button_show_recents">Tombol beranda untuk terbaru</string>
     <string name="enable">Aktifkan</string>
     <string name="disable">Nonaktifkan</string>
-    <string name="not_working"><u>Tidak bekerja?</u></string>
     <string name="info">Info</string>
     <string name="delete">Hapus</string>
     <string name="text_size">Ukuran teks</string>
@@ -111,7 +109,6 @@
     <string name="hidden_apps">Aplikasi tersembunyi</string>
     <string name="adapter_show">perlihatkan</string>
     <string name="adapter_hide">sembunyikan</string>
-    <string name="about_olauncher">Tentang Olauncher</string>
     <string name="learn_more">Pelajari lebih lanjut</string>
     <string name="screen_time">Waktu layar</string>
     <string name="alignment_changed">Penyelarasan diubah ✅</string>

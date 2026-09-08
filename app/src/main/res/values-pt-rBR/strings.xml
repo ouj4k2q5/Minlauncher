@@ -13,7 +13,6 @@
     <string name="black">Preto</string>
     <string name="white">Branco</string>
     <string name="change_default_launcher">Alterar launcher padrão</string>
-    <string name="privacy">Privacidade</string>
     <string name="follow">Seguir</string>
     <string name="email">E-mail</string>
 
@@ -86,7 +85,6 @@
     <string name="home_button_show_recents">Botão início para recentes</string>
     <string name="enable">Permitir</string>
     <string name="disable">Não permitir</string>
-    <string name="not_working"><u>Não está funcionando?</u></string>
     <string name="info">Informação</string>
     <string name="delete">Desinstalar</string>
     <string name="text_size">Tamanho do texto</string>
@@ -113,7 +111,6 @@
     <string name="hidden_apps">Aplicativos ocultos</string>
     <string name="adapter_show">Mostrar</string>
     <string name="adapter_hide">Esconder</string>
-    <string name="about_olauncher">Sobre Olauncher</string>
     <string name="learn_more">Saber mais</string>
     <string name="screen_time">Tempo de tela</string>
     <string name="alignment_changed">Alinhamento alterado ✅</string>

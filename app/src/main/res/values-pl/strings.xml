@@ -34,7 +34,6 @@
     <string name="home_button_show_recents">Przycisk ekranu głównego dla ostatnich</string>
     <string name="enable">Włącz</string>
     <string name="disable">Wyłącz</string>
-    <string name="not_working"><u>Nie działa?</u></string>
     <string name="info">Informacje</string>
     <string name="delete">Usuń</string>
     <string name="text_size">Rozmiar czcionki</string>
@@ -58,7 +57,6 @@
     <string name="black">Czarny</string>
     <string name="white">Biały</string>
     <string name="change_default_launcher">Zmień domyślny program uruchamiający</string>
-    <string name="privacy">Prywatność</string>
     <string name="follow">Śledź</string>
     <string name="email">E-mail</string>
 
@@ -112,7 +110,6 @@
     <string name="swipe_right_app_enabled">Gest Przesuń w prawo jest włączony</string>
     <string name="swipe_left_app_disabled">Gest Przesuń w lewo wyłączony</string>
     <string name="swipe_right_app_disabled">Gest Przesuń w prawo jest wyłączony</string>
-    <string name="about_olauncher">O Olauncher</string>
     <string name="screen_time">Czas ekranowy</string>
     <string name="learn_more">Ucz się więcej</string>
     <string name="alignment_changed">Wyrównanie zmienione ✅</string>

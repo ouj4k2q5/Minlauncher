@@ -12,7 +12,6 @@
     <string name="black">שחור</string>
     <string name="white">לבן</string>
     <string name="change_default_launcher">שינוי משגר ברירת המחדל</string>
-    <string name="privacy">פרטיות</string>
     <string name="follow">עקבו אחריי</string>
     <string name="email">דואר אלקטרוני</string>
     <string name="donate">תרומה</string>
@@ -79,7 +78,6 @@
     <string name="home_button_show_recents">כפתור הבית לאחרונים</string>
     <string name="enable">הפעלה</string>
     <string name="disable">השבתהe</string>
-    <string name="not_working"><u>לא עובד?</u></string>
     <string name="info">מידע</string>
     <string name="delete">מחיקה</string>
     <string name="text_size">גודל הטקסט</string>
@@ -106,7 +104,6 @@
     <string name="hidden_apps">אפליקציות מוסתרות</string>
     <string name="adapter_show">הצגה</string>
     <string name="adapter_hide">הסתרה</string>
-    <string name="about_olauncher">אודות ושאלות נפוצות</string>
     <string name="screen_time">זמן מסך</string>
     <string name="learn_more">למדו עוד</string>
     <string name="alignment_changed">היישור השתנה ✅</string>

@@ -13,7 +13,6 @@
     <string name="black">검정</string>
     <string name="white">흰색</string>
     <string name="change_default_launcher">기본 런처 변경</string>
-    <string name="privacy">개인정보</string>
     <string name="follow">팔로우</string>
     <string name="email">이메일</string>
     <string name="donate">후원</string>
@@ -79,7 +78,6 @@
     <string name="double_tap_lock">두 번 탭하여 잠금</string>
     <string name="enable">활성화</string>
     <string name="disable">비활성화</string>
-    <string name="not_working"><u>작동하지 않나요?</u></string>
     <string name="info">정보</string>
     <string name="delete">제거</string>
     <string name="text_size">텍스트 크기</string>
@@ -107,7 +105,6 @@
     <string name="hidden_apps">숨긴 앱</string>
     <string name="adapter_show">보이기</string>
     <string name="adapter_hide">숨기기</string>
-    <string name="about_olauncher">앱 정보 및 FAQ</string>
     <string name="screen_time">스크린 타임</string>
     <string name="learn_more">자세히 알아보기</string>
     <string name="alignment_changed">정렬이 변경되었습니다 ✅</string>

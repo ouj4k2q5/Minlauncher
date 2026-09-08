@@ -34,7 +34,6 @@
     <string name="home_button_show_recents">Ana ekran düğmesi son uygulamalar için</string>
     <string name="enable">Etkinleştir</string>
     <string name="disable">Devre dışı bırak</string>
-    <string name="not_working"><u>Çalışmıyor mu?</u></string>
     <string name="info">Bilgi</string>
     <string name="delete">Sil</string>
     <string name="text_size">Yazı Boyutu</string>
@@ -58,7 +57,6 @@
     <string name="black">Siyah</string>
     <string name="white">Beyaz</string>
     <string name="change_default_launcher">Varsayılan başlatıcıyı değiştir</string>
-    <string name="privacy">Gizlilik</string>
     <string name="follow">Takip et</string>
     <string name="email">E-posta</string>
 
@@ -113,7 +111,6 @@
     <string name="swipe_right_app_enabled">Sağa kaydırma uygulaması etkin</string>
     <string name="swipe_left_app_disabled">Sola kaydırma uygulaması devre dışı</string>
     <string name="swipe_right_app_disabled">Sağa kaydırma uygulaması devre dışı</string>
-    <string name="about_olauncher">Olauncher Hakkında</string>
     <string name="learn_more">Daha fazla bilgi</string>
     <string name="screen_time">Ekran süresi</string>
     <string name="alignment_changed">Hizalama değiştirildi ✅</string>

@@ -13,7 +13,6 @@
     <string name="black">Zwart</string>
     <string name="white">Wit</string>
     <string name="change_default_launcher">Wijzig standaard launcher</string>
-    <string name="privacy">Privacy</string>
     <string name="follow">Volgen</string>
     <string name="email">E-mail</string>
     <string name="donate">Doneren</string>
@@ -86,7 +85,6 @@
     <string name="home_button_show_recents">Startknop voor recente apps</string>
     <string name="enable">Inschakelen</string>
     <string name="disable">Uitschakelen</string>
-    <string name="not_working"><u>Werkt niet?</u></string>
     <string name="info">Info</string>
     <string name="delete">Verwijderen</string>
     <string name="text_size">Tekstgrootte</string>
@@ -113,7 +111,6 @@
     <string name="hidden_apps">Verborgen apps</string>
     <string name="adapter_show">Toon</string>
     <string name="adapter_hide">Verbergen</string>
-    <string name="about_olauncher">Over en veelgestelde vragen</string>
     <string name="screen_time">Schermtijd</string>
     <string name="learn_more">Meer informatie</string>
     <string name="alignment_changed">Uitlijning gewijzigd ✅</string>

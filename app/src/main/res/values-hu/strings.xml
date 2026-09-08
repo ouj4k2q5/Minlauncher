@@ -13,7 +13,6 @@
     <string name="black">Fekete</string>
     <string name="white">Fehér</string>
     <string name="change_default_launcher">Alapértelmezett indító módosítása</string>
-    <string name="privacy">Adatvédelem</string>
     <string name="follow">Követés</string>
     <string name="email">E-mail</string>
     <string name="donate">Adományozás</string>
@@ -88,7 +87,6 @@
     <string name="home_button_show_recents">Kezdőlap gomb a legutóbbiakhoz</string>
     <string name="enable">Engedélyezés</string>
     <string name="disable">Letiltás</string>
-    <string name="not_working"><u>Nem működik?</u></string>
     <string name="info">Információ</string>
     <string name="delete">Törlés</string>
     <string name="text_size">Szövegméret</string>
@@ -115,7 +113,6 @@
     <string name="hidden_apps">Rejtett alkalmazások</string>
     <string name="adapter_show">Mutasd!</string>
     <string name="adapter_hide">Rejtsd el!</string>
-    <string name="about_olauncher">Az Olauncher-ről</string>
     <string name="screen_time">Képernyőidő</string>
     <string name="learn_more">Tudjon meg többet</string>
     <string name="alignment_changed">Az igazítás megváltozott ✅</string>

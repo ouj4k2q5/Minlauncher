@@ -34,7 +34,6 @@
     <string name="home_button_show_recents">Home-Taste für letzte Apps</string>
     <string name="enable">Aktivieren</string>
     <string name="disable">Deaktivieren</string>
-    <string name="not_working"><u>Funktioniert nicht?</u></string>
     <string name="info">Die Info</string>
     <string name="delete">Löschen</string>
     <string name="text_size">Textgröße</string>
@@ -58,7 +57,6 @@
     <string name="black">Schwarz</string>
     <string name="white">Weiß</string>
     <string name="change_default_launcher">Standard-Launcher ändern</string>
-    <string name="privacy">Privatsphäre</string>
     <string name="follow">Folgen</string>
     <string name="email">Email</string>
 
@@ -114,7 +112,6 @@
     <string name="swipe_left_app_disabled">App nach links wischen deaktiviert</string>
     <string name="swipe_right_app_disabled">App nach rechts wischen deaktiviert</string>
     <string name="screen_time">Bildschirmzeit</string>
-    <string name="about_olauncher">Über Olauncher</string>
     <string name="learn_more">Erfahren Sie mehr</string>
     <string name="alignment_changed">Ausrichtung geändert ✅</string>
     <string name="home_screen">Startbildschirm</string>

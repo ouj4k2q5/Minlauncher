@@ -13,7 +13,6 @@
     <string name="black">Чорний</string>
     <string name="white">Білий</string>
     <string name="change_default_launcher">Змінити лаунчер за замовчуванням</string>
-    <string name="privacy">Конфіденційність</string>
     <string name="follow">Перейти</string>
     <string name="email">Электронна пошта</string>
 
@@ -86,7 +85,6 @@
     <string name="home_button_show_recents">Кнопка додому для нещодавніх</string>
     <string name="enable">Включити</string>
     <string name="disable">Виключити</string>
-    <string name="not_working"><u>Не працює?</u></string>
     <string name="info">Інформація</string>
     <string name="delete">Видалити</string>
     <string name="text_size">Розмір тексту</string>
@@ -113,7 +111,6 @@
     <string name="hidden_apps">Приховані додатків</string>
     <string name="adapter_show">Показати</string>
     <string name="adapter_hide">Приховати</string>
-    <string name="about_olauncher">Про нас Olauncher</string>
     <string name="learn_more">Вивчайте більше</string>
     <string name="screen_time">Час екрану</string>
     <string name="alignment_changed">Вирівнювання змінено ✅</string>

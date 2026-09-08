@@ -26,7 +26,6 @@
     <string name="home_button_show_recents">主页键用于最近应用</string>
     <string name="enable">启用</string>
     <string name="disable">禁用</string>
-    <string name="not_working"><u>不工作？</u></string>
     <string name="info">信息</string>
     <string name="delete">删除</string>
     <string name="text_size">字体大小</string>
@@ -50,7 +49,6 @@
     <string name="black">黑色</string>
     <string name="white">白色</string>
     <string name="change_default_launcher">更改默认启动器</string>
-    <string name="privacy">隐私</string>
     <string name="follow">关注</string>
     <string name="email">电子邮件</string>
 
@@ -114,7 +112,6 @@
     <string name="swipe_right_app_enabled">向右滑动应用程序启用</string>
     <string name="swipe_left_app_disabled">向左滑动应用程序已禁用</string>
     <string name="swipe_right_app_disabled">向右滑动应用程序已禁用</string>
-    <string name="about_olauncher">关于 Olauncher</string>
     <string name="learn_more">了解更多</string>
     <string name="screen_time">屏幕时间</string>
     <string name="alignment_changed">对齐已更改 ✅</string>
