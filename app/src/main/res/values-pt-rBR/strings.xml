@@ -5,7 +5,6 @@
     <string name="set_as_default_launcher_u"><u>Definir como launcher padrão</u></string>
     <string name="app_text_color">Cor do texto</string>
     <string name="double_tap_to_lock_screen">Toque duplo para bloquear</string>
-    <string name="admin_permission_message">Olauncher promete usar a permissão de bloqueio de telemóvel de forma responsável. Olauncher não faz coleção ou compartilha quaisquer dados.</string>
     <string name="about">Sobre</string>
     <string name="off">Desligado</string>
     <string name="on">Ligado</string>
@@ -86,10 +85,7 @@
     <string name="info">Informação</string>
     <string name="delete">Desinstalar</string>
     <string name="text_size">Tamanho do texto</string>
-    <string name="enabled">Habilitado</string>
     <string name="disabled">Desactivado</string>
-    <string name="please_turn_on_double_tap_to_unlock">Ative o toque duplo para bloquear</string>
-    <string name="launcher_failed_to_lock_device">Olauncher falhou ao bloquear o dispositivo. Verifique as configurações do seu aplicativo.</string>
     <string name="long_press_to_select_app">Pressione por muito tempo para selecionar o aplicativo</string>
     <string name="unable_to_open_app">Não é possível abrir as informações do aplicativo</string>
     <string name="copied">Copiado</string>

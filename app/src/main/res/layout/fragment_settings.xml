@@ -977,8 +977,7 @@
             android:orientation="vertical"
             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
-            android:padding="20dp"
-            tools:targetApi="p">
+            android:padding="20dp">
 
             <TextView
                 style="@style/TextLarge"

@@ -39,8 +39,7 @@
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
             android:paddingVertical="24dp"
             android:paddingStart="24dp"
-            android:paddingEnd="16dp"
-            tools:targetApi="p">
+            android:paddingEnd="16dp">
 
             <FrameLayout
                 android:layout_width="match_parent"

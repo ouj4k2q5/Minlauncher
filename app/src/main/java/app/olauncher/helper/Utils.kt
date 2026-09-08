@@ -28,7 +28,6 @@ import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.graphics.createBitmap
 import app.olauncher.BuildConfig
@@ -102,7 +101,7 @@ suspend fun getAppsList(
             }
 
             // Add shortcuts if we're getting regular apps
-            if (includeRegularApps && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (includeRegularApps) {
                 val pinned = try {
                     getPinnedShortcuts(context, prefs, collator)
                 } catch (e: Exception) {
@@ -119,7 +118,6 @@ suspend fun getAppsList(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 private suspend fun getPinnedShortcuts(
     context: Context,
     prefs: Prefs,
@@ -292,11 +290,8 @@ fun setPlainWallpaper(context: Context, color: Int) {
         val bitmap = createBitmap(1000, 2000)
         bitmap.eraseColor(context.getColor(color))
         val manager = WallpaperManager.getInstance(context)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            manager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_SYSTEM)
-            manager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_LOCK)
-        } else
-            manager.setBitmap(bitmap)
+        manager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_SYSTEM)
+        manager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_LOCK)
         bitmap.recycle()
     } catch (e: Exception) {
         e.printStackTrace()
@@ -481,7 +476,6 @@ fun View.animateAlpha(alpha: Float = 1.0f) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.N_MR1)
 fun Context.deletePinnedShortcut(packageName: String, shortcutIdToDelete: String, user: UserHandle) {
     val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 

@@ -25,10 +25,8 @@ class MyAccessibilityService : AccessibilityService() {
             if (source.className != "android.widget.FrameLayout") return
 
             when (source.contentDescription) {
-                getString(R.string.lock_layout_description) -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                        performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
-                }
+                getString(R.string.lock_layout_description) ->
+                    performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
                 // Home button for recents feature disabled
                 // getString(R.string.recents_layout_description) -> {
                 //     performGlobalAction(GLOBAL_ACTION_RECENTS)
