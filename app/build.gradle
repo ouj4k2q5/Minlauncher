@@ -14,7 +14,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "app.olauncher"
+        applicationId "io.github.ouj4k2q5.minlauncher"
         minSdkVersion 24
         targetSdkVersion 36
         versionCode 112
