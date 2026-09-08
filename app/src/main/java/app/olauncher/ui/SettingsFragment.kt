@@ -468,6 +468,11 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
 
 
     private fun populateAppThemeText(appTheme: Int = prefs.appTheme) {
+        // MainActivity forces the light theme on e-ink, so the switcher would do nothing there.
+        if (requireContext().isEinkDisplay()) {
+            binding.appThemeLayout.visibility = View.GONE
+            return
+        }
         when (appTheme) {
             AppCompatDelegate.MODE_NIGHT_YES -> binding.appThemeText.text = getString(R.string.dark)
             AppCompatDelegate.MODE_NIGHT_NO -> binding.appThemeText.text = getString(R.string.light)
