@@ -245,7 +245,7 @@ class AppDrawerFragment : BaseFragment() {
                 val scrollRange = super.scrollVerticallyBy(dx, recycler, state)
                 val overScroll = dx - scrollRange
                 if (overScroll < -10 && binding.recyclerView.scrollState == RecyclerView.SCROLL_STATE_DRAGGING)
-                    checkMessageAndExit()
+                    exitDrawer()
                 return scrollRange
             }
         }
@@ -357,10 +357,8 @@ class AppDrawerFragment : BaseFragment() {
         }
     }
 
-    private fun checkMessageAndExit() {
+    private fun exitDrawer() {
         findNavController().popBackStack()
-        if (flag == Constants.FLAG_LAUNCH_APP)
-            viewModel.checkForMessages.call()
     }
 
     override fun onStart() {
