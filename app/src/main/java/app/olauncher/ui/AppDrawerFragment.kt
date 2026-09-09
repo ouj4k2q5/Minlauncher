@@ -169,13 +169,11 @@ class AppDrawerFragment : BaseFragment() {
                 when (appModel) {
                     is AppModel.PrivateSpaceHeader -> {}
                     is AppModel.PinnedShortcut ->
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                            requireContext().deletePinnedShortcut(
-                                packageName = appModel.appPackage,
-                                shortcutIdToDelete = appModel.shortcutId,
-                                user = appModel.user,
+                        requireContext().deletePinnedShortcut(
+                            packageName = appModel.appPackage,
+                            shortcutIdToDelete = appModel.shortcutId,
+                            user = appModel.user,
                             )
-                        }
 
                     is AppModel.App -> {
                         if (appModel.user != Process.myUserHandle()) {
@@ -245,7 +243,7 @@ class AppDrawerFragment : BaseFragment() {
                 val scrollRange = super.scrollVerticallyBy(dx, recycler, state)
                 val overScroll = dx - scrollRange
                 if (overScroll < -10 && binding.recyclerView.scrollState == RecyclerView.SCROLL_STATE_DRAGGING)
-                    checkMessageAndExit()
+                    exitDrawer()
                 return scrollRange
             }
         }
@@ -357,10 +355,8 @@ class AppDrawerFragment : BaseFragment() {
         }
     }
 
-    private fun checkMessageAndExit() {
+    private fun exitDrawer() {
         findNavController().popBackStack()
-        if (flag == Constants.FLAG_LAUNCH_APP)
-            viewModel.checkForMessages.call()
     }
 
     override fun onStart() {
