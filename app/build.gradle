@@ -51,6 +51,9 @@ android {
             debuggable false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Without a keystore the APK is left unsigned, so assembleRelease still works
+            // for anyone building from source.
+            if (System.getenv('KEYSTORE_PATH')) signingConfig signingConfigs.release
         }
         debug {
             debuggable true
