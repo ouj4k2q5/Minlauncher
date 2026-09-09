@@ -26,37 +26,76 @@ If you are looking for the original, well-maintained launcher, use
 ## Why this fork exists
 
 - Learning project: understanding a real-world Android codebase end to end
-- Remove all promotional content — links to the author's other apps, the pro-version
-  upsell, and the timed rate/share prompts — for a strictly prompt-free experience
-- Replace the network-backed daily photo wallpaper with a plain solid colour that
-  follows the theme, so the app needs no internet access at all
-- Raise `minSdk` to simplify version-conditional code paths
+- Remove every piece of promotional content, including the ones that only appear after
+  the app has been installed for a while
+- Stop the app needing network access at all
+- Raise `minSdk` so each feature has one code path instead of two
 
 ## Changes from upstream
 
+The Kotlin sources went from 5,868 lines across 28 files to 5,185 across 26, and the
+app no longer declares any network permission.
+
 ### Identity
+
 - Renamed the app to `MinLauncher`
 - Changed `applicationId` to `io.github.ouj4k2q5.minlauncher`
 - Removed the upstream author's funding configuration and app-store metadata
 
-### Removed
-- _(planned)_ All in-app promotion: the "More features…" pro upsell, the footer links
-  to the author's other apps, the rate/share entries, and the timed prompt state
-  machine that surfaced review/rate/share dialogs after 10 minutes / 1 hour / 7 days /
-  14 days of use
-- _(planned)_ Remaining outbound links to the author's blog, privacy policy and
-  developer page
-- _(planned)_ The network-backed daily photo wallpaper, along with the `INTERNET`
-  permission and the WorkManager dependency
-- _(planned)_ Deprecated `androidx.lifecycle:lifecycle-extensions` dependency and the
-  unused `com.google.android.material` dependency
-- _(planned)_ Device-admin based screen locking, which `minSdk 30` makes redundant
+### Removed — promotion
+
+- The "More features…" row, which upsold the paid Pro Launcher
+- The settings footer that linked to the author's other apps, alternating between two of
+  them depending on whether the millisecond clock happened to be even
+- The share, rate and X/Twitter rows
+- **The timed prompt state machine.** This is the part that made removing the rows above
+  insufficient on their own: a `UserState` machine advanced through
+  `START → WALLPAPER → REVIEW → RATE → SHARE` as the install aged and popped a dialog at
+  each step — a wallpaper pitch after 10 minutes, a review request after an hour, a rate
+  request after 7 days, a share request after 14 days. It was triggered from three places
+  (closing the app drawer, closing settings, tapping the home screen), so the dialogs
+  would have kept appearing on a timer
+- The new-year greeting dialogs, which shared the same entry point
+- Outbound links to the author's blog, privacy policy, developer page and the
+  "Not working?" help page
+
+### Removed — network access
+
+- The daily photo wallpaper, which downloaded a JSON index from the author's GitHub gist,
+  fetched a photo over HTTP and reapplied it every four hours via WorkManager
+- The `INTERNET` permission and the WorkManager dependency that existed only to serve it
+
+What replaces it is the plain-colour path upstream already had: a solid wallpaper that
+follows the theme — black under the dark theme, white under the light one. Since the
+window is transparent and `windowShowWallpaper` is on, the wallpaper *is* the app
+background, so it is repainted whenever the theme changes.
+
+### Removed — dependencies and dead code
+
+- `androidx.lifecycle:lifecycle-extensions`, deprecated since 2019, replaced by explicit
+  `lifecycle-runtime-ktx` and `lifecycle-livedata-ktx` declarations
+- `com.google.android.material`, which had no references anywhere in the source or
+  resources
+- Device-admin based screen locking. Android 9 added
+  `AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN` and before that `DevicePolicyManager`
+  was the only option, so upstream carried both. `minSdk 30` makes only one reachable, so
+  `DeviceAdmin`, its `res/xml/policies.xml` policy declaration and the manifest receiver
+  with its `BIND_DEVICE_ADMIN` permission are gone
+- Unused strings, dropped from `values/` and all 20 translated locales
 
 ### Changed
-- _(planned)_ Raised `minSdk` from 24 to 30 and dropped the version-conditional
-  branches it made unreachable
-- _(planned)_ The theme switcher is hidden on e-ink displays, where the light theme is
-  forced anyway
+
+- Raised `minSdk` from 24 to 30, then removed the version-conditional branches it made
+  unreachable. Lint's `ObsoleteSdkInt` count went from 36 to 1. Status bar show/hide
+  collapsed to `WindowInsetsController` alone, and the pinned-shortcut and pin-item calls
+  lost their `@RequiresApi` annotations
+- `kotlinx-coroutines-android` is now declared explicitly. The code imports
+  `Dispatchers`, `launch` and `withContext` but had been relying on
+  `lifecycle-viewmodel-ktx` to supply them transitively
+- The theme switcher is hidden on e-ink displays, where `MainActivity` forces the light
+  theme anyway, so the control could not have taken effect
+- `enableJetifier` removed — `./gradlew checkJetifier` confirms no dependency uses legacy
+  support libraries, so it only slowed the build down
 
 ## Building
 
@@ -74,10 +113,10 @@ Requirements:
 | Gradle | 8.11.1 (via wrapper) |
 | Android Gradle Plugin | 8.9.1 |
 | `compileSdk` / `targetSdk` | 36 |
-| `minSdk` | 24 |
+| `minSdk` | 30 (Android 11) |
 
 The debug build uses `applicationIdSuffix ".debug"`, so it can be installed alongside a
-release build.
+release build — or alongside upstream Olauncher.
 
 ```bash
 ./gradlew test    # unit tests
@@ -86,19 +125,35 @@ release build.
 
 ## Installing
 
-No published releases yet — build from source as shown above.
+No published releases yet — build from source as shown above. `./gradlew assembleDebug`
+produces a debug-signed APK at `app/build/outputs/apk/debug/app-debug.apk` that installs
+on a real device with `adb install`.
+
+`./gradlew assembleRelease` currently produces an **unsigned** APK, which cannot be
+installed.
 
 ## Privacy
 
-This app collects no analytics and sends no telemetry.
+This app collects no analytics, sends no telemetry, and **cannot reach the network at
+all** — it declares no `INTERNET` permission, so network access is not merely unused but
+technically unavailable.
 
-Two Android permissions deserve explanation:
+The seven permissions it does declare are all launcher functionality:
 
-- `QUERY_ALL_PACKAGES` — required to list the installed apps a launcher must show
-- `PACKAGE_USAGE_STATS` — optional; used only to display today's screen time
+| Permission | Why |
+|---|---|
+| `QUERY_ALL_PACKAGES` | Required to list the installed apps a launcher must show |
+| `SET_WALLPAPER` | Applying the solid-colour wallpaper |
+| `PACKAGE_USAGE_STATS` | Optional; only used to display today's screen time |
+| `EXPAND_STATUS_BAR` | Opening the notification shade on swipe down |
+| `REQUEST_DELETE_PACKAGES` | Uninstalling an app from the drawer |
+| `ACCESS_HIDDEN_PROFILES` | Private Space support on Android 15+ |
+| `SET_ALARM` | Opening the clock app when the clock is tapped |
 
 The optional accessibility service is used **only** to turn the screen off with a
-double-tap gesture, and collects nothing.
+double-tap gesture, and collects nothing. Screen time is computed on the device from
+`UsageStatsManager` and never leaves it.
+
 
 ## Contributing
 
