@@ -40,6 +40,7 @@ app no longer declares any network permission.
 
 - Renamed the app to `MinLauncher`
 - Changed `applicationId` to `io.github.ouj4k2q5.minlauncher`
+- Versioning restarted at 1.0.0 rather than continuing upstream's `versionCode 112`
 - Removed the upstream author's funding configuration and app-store metadata
 
 ### Removed — promotion
@@ -120,17 +121,129 @@ release build — or alongside upstream Olauncher.
 
 ```bash
 ./gradlew test    # unit tests
-./gradlew lint    # Android Lint
+./gradlew lint    # Android Lint — passes with zero errors and no baseline file
 ```
+
+`versionName` and `versionCode` default to `1.0.0` / `10000` and can be overridden, which
+is how the release workflow injects the version derived from the tag:
+
+```bash
+./gradlew assembleDebug -PappVersionName=1.2.3 -PappVersionCode=10203
+```
+
+`./gradlew assembleRelease` produces an **unsigned** APK unless signing credentials are
+present in the environment — see [Releasing](#releasing). An unsigned APK cannot be
+installed.
 
 ## Installing
 
-No published releases yet — build from source as shown above. `./gradlew assembleDebug`
-produces a debug-signed APK at `app/build/outputs/apk/debug/app-debug.apk` that installs
-on a real device with `adb install`.
+Grab an APK from [Releases](https://github.com/ouj4k2q5/MinLauncher/releases), or build a
+debug one from source as shown above and install it with
+`adb install app/build/outputs/apk/debug/app-debug.apk`.
 
-`./gradlew assembleRelease` currently produces an **unsigned** APK, which cannot be
-installed.
+Release APKs carry a SLSA build provenance attestation, so you can confirm a download
+really came from this repository's workflow before installing it:
+
+```bash
+gh attestation verify MinLauncher-1.0.0.apk --repo ouj4k2q5/MinLauncher
+```
+
+## Releasing
+
+Two GitHub Actions workflows, using only first-party `actions/*` and `gradle/*` actions —
+the release is created with the `gh` CLI rather than a Marketplace action.
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| [`ci.yml`](.github/workflows/ci.yml) | push to any branch, pull request | `test lint assembleDebug assembleRelease`, uploads reports and the debug APK |
+| [`release.yml`](.github/workflows/release.yml) | push of a `v*` tag | builds a signed release APK, verifies the signature, attests provenance, publishes a GitHub Release |
+
+`assembleRelease` runs in CI too, even though nothing is published from it, because R8
+only runs in the release build.
+
+Every action is pinned to a commit SHA rather than a tag, since a tag can be moved if the
+action's repository is compromised. [Dependabot](.github/dependabot.yml) keeps the pins
+current, which is the part that makes pinning safe rather than merely frozen.
+
+### Cutting a release
+
+Use [`scripts/tag-release.sh`](scripts/tag-release.sh), which runs every check the
+workflow performs on the tag before creating it — a malformed version then fails in a
+second locally rather than a few minutes into CI.
+
+```bash
+./scripts/tag-release.sh custom 1.0.0    # first release
+./scripts/tag-release.sh patch           # 1.0.0 -> 1.0.1
+./scripts/tag-release.sh minor           # 1.0.1 -> 1.1.0
+./scripts/tag-release.sh major           # 1.1.0 -> 2.0.0
+./scripts/tag-release.sh --dry-run patch # show what would happen
+```
+
+It refuses to proceed when the working tree is dirty, when the branch has unpushed
+commits (the workflow builds the tagged commit from the remote), when the tag already
+exists locally or on the remote, when the version format is wrong, or when `versionCode`
+would not increase. It warns when tagging from a non-default branch, and prints the
+resulting `versionCode` and APK name before asking for confirmation.
+
+Doing it by hand is equivalent:
+
+```bash
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push origin v1.0.0
+```
+
+The tag must match `vMAJOR.MINOR.PATCH`; anything else is rejected by the workflow.
+`versionCode` is computed as `major*10000 + minor*100 + patch`, so it is a function of the
+version alone and re-running a workflow cannot change it. Minor and patch must stay below
+100.
+
+### One-time setup: clearing inherited tags
+
+A GitHub fork copies the upstream repository's tags, so this fork starts out carrying
+Olauncher's ~74 release tags — including `v6.7.19`, which is higher than anything this
+fork will produce. Since versioning restarts at 1.0.0, they are worth removing:
+
+```bash
+git tag -d $(git tag)
+git ls-remote --tags origin | awk '{print ":" $2}' | xargs -n 50 git push origin
+```
+
+`tag-release.sh` does not depend on this having been done — it distinguishes upstream tags
+by whether they are reachable from the fork base commit `1d438f8` and ignores them either
+way — but leaving them makes the Releases page and tag list confusing.
+
+### Signing setup
+
+Signing credentials come from the environment, so nothing secret is committed. Create a
+keystore once:
+
+```bash
+keytool -genkeypair -v \
+ -keystore release.jks -storetype PKCS12 \
+ -alias minlauncher -keyalg RSA -keysize 4096 -validity 10950
+```
+
+Keep it out of the repository — `.gitignore` covers `*.jks` — and back it up somewhere,
+because losing it means never being able to update an installed copy of the app again.
+
+Then add four repository secrets under **Settings → Secrets and variables → Actions**:
+
+| Secret | Value |
+|---|---|
+| `KEYSTORE_BASE64` | `base64 -i release.jks` output |
+| `KEYSTORE_PASSWORD` | keystore password |
+| `KEY_ALIAS` | `minlauncher` |
+| `KEY_PASSWORD` | key password |
+
+Four separate secrets rather than one JSON blob, because log redaction works by exact
+match and a structured value would defeat it.
+
+Adding required reviewers to the `release` environment turns a tag push into a manual
+approval gate.
+
+The R8 `mapping.txt` is archived as a build artifact for 90 days. Release builds keep line
+numbers, so a stack trace can be retraced — but only with the mapping from that exact
+build.
 
 ## Privacy
 
@@ -153,7 +266,6 @@ The seven permissions it does declare are all launcher functionality:
 The optional accessibility service is used **only** to turn the screen off with a
 double-tap gesture, and collects nothing. Screen time is computed on the device from
 `UsageStatsManager` and never leaves it.
-
 
 ## Contributing
 
