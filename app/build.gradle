@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android'
 // The defaults keep local builds working without passing anything.
 def appVersionName = (project.findProperty('appVersionName') ?: '1.0.0').toString()
 def appVersionCode = (project.findProperty('appVersionCode') ?: '10000').toString().toInteger()
+
 android {
     compileSdk 36
 
@@ -27,6 +28,22 @@ android {
 
         resourceConfigurations += ["en", "ar", "de", "es-rES", "es-rUS", "fr", "he", "hr", "hu", "in", "it", "ja", "ko", "nl", "pl", "pt-rBR", "ru-rRU", "sv", "tr", "uk", "zh"]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    // Credentials come from the environment rather than being written here, so nothing
+    // secret ends up in the repository. The release workflow decodes the keystore from a
+    // secret and points KEYSTORE_PATH at it. Passing them as environment variables rather
+    // than -P properties also keeps them out of the process list.
+    signingConfigs {
+        release {
+            def keystorePath = System.getenv('KEYSTORE_PATH')
+            if (keystorePath) {
+                storeFile file(keystorePath)
+                storePassword System.getenv('KEYSTORE_PASSWORD')
+                keyAlias System.getenv('KEY_ALIAS')
+                keyPassword System.getenv('KEY_PASSWORD')
+            }
+        }
     }
 
     buildTypes {
