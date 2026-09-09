@@ -1,5 +1,6 @@
 package app.olauncher.helper
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AppOpsManager
 import android.app.SearchManager
@@ -49,6 +50,11 @@ fun Activity.showLauncherSelector(requestCode: Int) {
         resetDefaultLauncher()
 }
 
+// The implicit intent is the mechanism here: FakeHomeActivity is briefly enabled so that
+// more than one activity answers CATEGORY_HOME, which is what makes the system show its
+// launcher chooser. Setting an explicit component would launch FakeHomeActivity directly
+// and no chooser would appear.
+@SuppressLint("UnsafeImplicitIntentLaunch")
 fun Context.resetDefaultLauncher() {
     try {
         val componentName = ComponentName(this, FakeHomeActivity::class.java)
