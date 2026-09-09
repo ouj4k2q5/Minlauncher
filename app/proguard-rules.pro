@@ -12,10 +12,10 @@
 #   public *;
 #}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep line numbers so that stack traces from release builds can be read after
+# retracing them with the mapping.txt that the release workflow archives.
+-keepattributes SourceFile,LineNumberTable
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Line numbers are enough to locate the frame; the original file name adds nothing and
+# would leak the source layout, so replace it with a placeholder.
+-renamesourcefileattribute SourceFile
