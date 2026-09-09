@@ -104,11 +104,11 @@
     <string name="info">Info</string>
     <string name="delete">Uninstall</string>
     <string name="text_size">Text size</string>
-    <string name="bold_font">Bold font</string>
+    <string name="bold_font" tools:ignore="MissingTranslation">Bold font</string>
     <string name="disabled">Disabled</string>
     <string name="long_press_to_select_app">Long press to select app</string>
     <string name="unable_to_open_app">Unable to open app</string>
-    <string name="unable_to_open_app_info">Unable to open app info</string>
+    <string name="unable_to_open_app_info" tools:ignore="MissingTranslation">Unable to open app info</string>
     <string name="copied">Copied</string>
     <string name="system_app_cannot_delete">System app, cannot delete</string>
     <string name="type_a_new_app_name_first">Type a new app name first</string>
