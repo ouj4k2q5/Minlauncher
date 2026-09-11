@@ -1,6 +1,5 @@
 package app.olauncher.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -35,6 +34,8 @@ import app.olauncher.helper.openAppInfo
 import app.olauncher.helper.openUrl
 import app.olauncher.helper.setPlainWallpaperByTheme
 import app.olauncher.helper.showToast
+import java.util.Locale
+import kotlin.math.round
 
 class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListener {
 
@@ -81,7 +82,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
         binding.dateTimeSelectLayout.visibility = View.GONE
         binding.appThemeSelectLayout.visibility = View.GONE
         binding.swipeDownSelectLayout.visibility = View.GONE
-        if (view.id != R.id.textSizeMinus && view.id != R.id.textSizePlus) {
+        if ((view.id != R.id.textSizeMinus) && (view.id != R.id.textSizePlus)) {
             if (binding.textSizesLayout.isVisible) {
                 binding.textSizesLayout.visibility = View.GONE
                 applyTextSizeScale()
@@ -118,7 +119,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
             R.id.textSizeValue -> binding.textSizesLayout.visibility = View.VISIBLE
             R.id.boldFont -> toggleBoldFont()
             R.id.actionAccessibility -> openAccessibilityService()
-            R.id.closeAccessibility -> toggleAccessibilityVisibility(false)
+            R.id.closeAccessibility -> toggleAccessibilityVisibility(show = false)
 
             R.id.tvGestures -> binding.flSwipeDown.visibility = View.VISIBLE
 
@@ -308,7 +309,9 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
         viewModel.getHiddenApps()
         findNavController().navigate(
             R.id.action_settingsFragment_to_appListFragment,
-            bundleOf(Constants.Key.FLAG to Constants.FLAG_HIDDEN_APPS)
+            Bundle().apply {
+                putInt(Constants.Key.FLAG, Constants.FLAG_HIDDEN_APPS)
+            }
         )
     }
 
@@ -368,11 +371,11 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
     private fun adjustTextSizePreview(delta: Float) {
         val maxScale = if (isTablet(requireContext())) 2.0f else 1.5f
         val current = if (pendingTextSizeScale > 0) pendingTextSizeScale else prefs.textSizeScale
-        val newScale = Math.round((current + delta) * 10f) / 10f
+        val newScale = round((current + delta) * 10f) / 10f
         val clamped = newScale.coerceIn(0.5f, maxScale)
         if (clamped == current) return
         pendingTextSizeScale = clamped
-        val formatted = String.format("%.1f", clamped)
+        val formatted = String.format(Locale.US, "%.1f", clamped)
         binding.textSizeValue.text = formatted
         binding.textSizeCurrent.text = formatted
     }
@@ -427,7 +430,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
     }
 
     private fun populateTextSize() {
-        val formatted = String.format("%.1f", prefs.textSizeScale)
+        val formatted = String.format(Locale.US, "%.1f", prefs.textSizeScale)
         binding.textSizeValue.text = formatted
         binding.textSizeCurrent.text = formatted
     }
@@ -530,18 +533,20 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
 //    }
 
     private fun showAppListIfEnabled(flag: Int) {
-        if ((flag == Constants.FLAG_SET_SWIPE_LEFT_APP) and !prefs.swipeLeftEnabled) {
+        if ((flag == Constants.FLAG_SET_SWIPE_LEFT_APP) && !prefs.swipeLeftEnabled) {
             requireContext().showToast(getString(R.string.long_press_to_enable))
             return
         }
-        if ((flag == Constants.FLAG_SET_SWIPE_RIGHT_APP) and !prefs.swipeRightEnabled) {
+        if ((flag == Constants.FLAG_SET_SWIPE_RIGHT_APP) && !prefs.swipeRightEnabled) {
             requireContext().showToast(getString(R.string.long_press_to_enable))
             return
         }
         viewModel.getAppList(true)
         findNavController().navigate(
             R.id.action_settingsFragment_to_appListFragment,
-            bundleOf(Constants.Key.FLAG to flag)
+            Bundle().apply {
+                putInt(Constants.Key.FLAG, flag)
+            }
         )
     }
 

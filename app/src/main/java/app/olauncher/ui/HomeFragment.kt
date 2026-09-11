@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.LauncherApps
 import android.content.res.Configuration
 import android.os.BatteryManager
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -75,7 +74,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
 
     override fun onResume() {
         super.onResume()
-        populateHomeScreen(false)
+        populateHomeScreen(appCountUpdated = false)
         viewModel.isOlauncherDefault()
         if (prefs.showStatusBar) showStatusBar()
         else hideStatusBar()
@@ -505,9 +504,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
             activityClassName = prefs.appActivityClassNameRight,
             shortcutId = prefs.shortcutIdSwipeRight,
             isShortcut = prefs.isShortcutSwipeRight,
-            userString = prefs.appUserSwipeRight,
-            fallback = { openDialerApp(requireContext()) }
-        )
+            userString = prefs.appUserSwipeRight
+        ) { openDialerApp(requireContext()) }
     }
 
     private fun openSwipeLeftApp() {
@@ -518,28 +516,25 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
             activityClassName = prefs.appActivityClassNameSwipeLeft,
             shortcutId = prefs.shortcutIdSwipeLeft,
             isShortcut = prefs.isShortcutSwipeLeft,
-            userString = prefs.appUserSwipeLeft,
-            fallback = { openCameraApp(requireContext()) }
-        )
+            userString = prefs.appUserSwipeLeft
+        ) { openCameraApp(requireContext()) }
     }
 
     private fun showAppList(flag: Int, rename: Boolean = false, includeHiddenApps: Boolean = false) {
         viewModel.getAppList(includeHiddenApps)
+        val bundle = Bundle().apply {
+            putInt(Constants.Key.FLAG, flag)
+            putBoolean(Constants.Key.RENAME, rename)
+        }
         try {
             findNavController().navigate(
                 R.id.action_mainFragment_to_appListFragment,
-                bundleOf(
-                    Constants.Key.FLAG to flag,
-                    Constants.Key.RENAME to rename
-                )
+                bundle
             )
         } catch (e: Exception) {
             findNavController().navigate(
                 R.id.appListFragment,
-                bundleOf(
-                    Constants.Key.FLAG to flag,
-                    Constants.Key.RENAME to rename
-                )
+                bundle
             )
             e.printStackTrace()
         }
@@ -560,13 +555,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
         requireActivity().window.insetsController?.hide(WindowInsets.Type.statusBars())
     }
 
-    private fun changeAppTheme() {
-        if (prefs.solidWallpaper.not()) return
-        val changedAppTheme = getChangedAppTheme(requireContext(), prefs.appTheme)
-        prefs.appTheme = changedAppTheme
-        setPlainWallpaperByTheme(requireContext(), changedAppTheme)
-        requireActivity().recreate()
-    }
+
 
     private fun openScreenTimeDigitalWellbeing() {
         if (prefs.screenTimeAppPackage.isNotBlank()) {

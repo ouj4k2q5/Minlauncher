@@ -1,7 +1,6 @@
 package app.olauncher.ui
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.text.Spannable
@@ -82,7 +81,7 @@ class AppDrawerFragment : BaseFragment() {
     private fun initViews() {
         if (flag == Constants.FLAG_HIDDEN_APPS)
             binding.search.queryHint = getString(R.string.hidden_apps)
-        else if (flag in Constants.FLAG_SET_HOME_APP_1..Constants.FLAG_SET_CALENDAR_APP)
+        else if (flag in (Constants.FLAG_SET_HOME_APP_1..Constants.FLAG_SET_CALENDAR_APP))
             binding.search.queryHint = "Please select an app"
         try {
             searchTextView = binding.search.findViewById(androidx.appcompat.R.id.search_src_text)
@@ -136,10 +135,10 @@ class AppDrawerFragment : BaseFragment() {
             val language = when {
                 subtype == null -> ""
                 subtype.languageTag.isNotEmpty() -> subtype.languageTag // e.g. "zh-CN", "ja-JP", "en-US"
-                else -> subtype.locale // deprecated fallback, e.g. "zh_CN"
+                else -> subtype.locale.toString() // fallback
             }
             language.startsWith("zh") || language.startsWith("ja") || language.startsWith("ko")
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             false
         }
         cachedIsCjkKeyboard = result
@@ -153,7 +152,7 @@ class AppDrawerFragment : BaseFragment() {
             appClickListener = { appModel ->
                 viewModel.selectedApp(appModel, flag)
                 if (flag == Constants.FLAG_LAUNCH_APP || flag == Constants.FLAG_HIDDEN_APPS)
-                    findNavController().popBackStack(R.id.mainFragment, false)
+                    findNavController().popBackStack(destinationId = R.id.mainFragment, inclusive = false)
                 else
                     findNavController().popBackStack()
             },

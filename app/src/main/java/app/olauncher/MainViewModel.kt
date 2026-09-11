@@ -64,14 +64,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     is AppModel.PinnedShortcut -> launchShortcut(appModel)
                     is AppModel.App ->
                         launchApp(appModel.appPackage, appModel.activityClassName, appModel.user)
-
-                    else -> {}
                 }
             }
 
             Constants.FLAG_HIDDEN_APPS -> {
-                if (appModel is AppModel.App) {
-                    launchApp(appModel.appPackage, appModel.activityClassName, appModel.user)
+                (appModel as? AppModel.App)?.let {
+                    launchApp(it.appPackage, it.activityClassName, it.user)
                 }
             }
 
@@ -266,7 +264,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
-        refreshHome(false)
+        refreshHome(appCountUpdated = false)
     }
 
     private fun saveSwipeApp(appModel: AppModel, isLeft: Boolean) {
@@ -377,7 +375,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         } catch (e: SecurityException) {
             try {
                 launcher.startMainActivity(component, android.os.Process.myUserHandle(), null, null)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 appContext.showToast(appContext.getString(R.string.unable_to_open_app))
             }
         } catch (e: Exception) {
@@ -428,8 +426,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         val timeSpent = eventLogWrapper.aggregateSimpleUsageStats(
             eventLogWrapper.aggregateForegroundStats(
-                eventLogWrapper.getForegroundStatsByTimestamps(startTime, endTime)
-            )
+                eventLogWrapper.getForegroundStatsByTimestamps(startTime, endTime),
+            ),
         )
         val viewTimeSpent = appContext.formattedTimeSpent(timeSpent)
         screenTimeValue.postValue(viewTimeSpent)

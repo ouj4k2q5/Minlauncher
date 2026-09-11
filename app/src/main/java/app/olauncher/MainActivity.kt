@@ -26,7 +26,6 @@ import app.olauncher.data.Constants
 import app.olauncher.data.Prefs
 import app.olauncher.databinding.ActivityMainBinding
 import app.olauncher.helper.getColorFromAttr
-import app.olauncher.helper.hasBeenDays
 import app.olauncher.helper.hasBeenHours
 import app.olauncher.helper.hasBeenMinutes
 import app.olauncher.helper.isDarkThemeOn
@@ -83,12 +82,7 @@ class MainActivity : AppCompatActivity() {
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (navController.currentDestination?.id != R.id.mainFragment) {
-                    // then we might want to finish the activity or disable this callback.
-                    if (navController.popBackStack()) {
-                        // Successfully popped back
-                    } else {
-                        // if you want other system/activity level handling
-                    }
+                    navController.popBackStack()
                 } else {
                     binding.messageLayout.visibility = View.GONE
                 }
@@ -97,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         if (prefs.firstOpen) {
-            viewModel.firstOpen(true)
+            viewModel.firstOpen(value = true)
             prefs.firstOpen = false
             prefs.firstOpenTime = System.currentTimeMillis()
             viewModel.setDefaultClockApp()
@@ -191,7 +185,7 @@ class MainActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         AppCompatDelegate.setDefaultNightMode(prefs.appTheme)
-        if (prefs.solidWallpaper && AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+        if (prefs.solidWallpaper && (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)) {
             setPlainWallpaperByTheme(this, prefs.appTheme)
             recreate()
         }
@@ -284,7 +278,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkTheme() {
         timerJob?.cancel()
         timerJob = lifecycleScope.launch {
-            delay(200)
+            delay(timeMillis = 200)
             if ((prefs.appTheme == AppCompatDelegate.MODE_NIGHT_YES && getColorFromAttr(R.attr.primaryColor) != getColor(R.color.white))
                 || (prefs.appTheme == AppCompatDelegate.MODE_NIGHT_NO && getColorFromAttr(R.attr.primaryColor) != getColor(R.color.black))
             )
@@ -308,7 +302,7 @@ class MainActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Constants.REQUEST_CODE_LAUNCHER_SELECTOR && resultCode == Activity.RESULT_OK)
+        if (requestCode == Constants.REQUEST_CODE_LAUNCHER_SELECTOR && resultCode == RESULT_OK)
             resetLauncherViaFakeActivity()
     }
 }

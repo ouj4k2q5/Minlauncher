@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 // Version is injected by the release workflow, which derives it from the git tag:
 //   tag v1.2.3 -> appVersionName=1.2.3, appVersionCode=10203 (major*10000 + minor*100 + patch)
@@ -8,25 +7,21 @@ def appVersionName = (project.findProperty('appVersionName') ?: '1.0.0').toStrin
 def appVersionCode = (project.findProperty('appVersionCode') ?: '10000').toString().toInteger()
 
 android {
-    compileSdk 36
+    compileSdk 37
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
     defaultConfig {
         applicationId "io.github.ouj4k2q5.minlauncher"
-        minSdkVersion 30
-        targetSdkVersion 36
+        minSdk 30
+        targetSdk 37
         versionCode appVersionCode
         versionName appVersionName
 
-        resourceConfigurations += ["en", "ar", "de", "es-rES", "es-rUS", "fr", "he", "hr", "hu", "in", "it", "ja", "ko", "nl", "pl", "pt-rBR", "ru-rRU", "sv", "tr", "uk", "zh"]
+        resourceConfigurations.addAll(["en", "ar", "de", "es-rES", "es-rUS", "fr", "he", "hr", "hu", "in", "it", "ja", "ko", "nl", "pl", "pt-rBR", "ru-rRU", "sv", "tr", "uk", "zh"])
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -66,7 +61,7 @@ android {
         viewBinding = true
         buildConfig = true
     }
-    namespace 'app.olauncher'
+    namespace = 'app.olauncher'
 }
 
 dependencies {
