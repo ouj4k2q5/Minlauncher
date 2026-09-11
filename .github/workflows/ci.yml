@@ -1,0 +1,60 @@
+name: CI
+
+# A push that creates a tag carries no branch, so a branch filter alone already keeps
+# tag pushes out of this workflow — those are handled by release.yml.
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+# Least privilege by default. This workflow only needs to read the repository.
+permissions:
+  contents: read
+
+# Supersede an in-flight run when new commits arrive on the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Test, lint and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        with:
+          distribution: temurin
+          java-version: '17'
+          # No `cache: gradle` here: setup-gradle below owns the Gradle User Home cache
+          # and the two interfere with each other.
+
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        # Wrapper validation is built in, so no separate wrapper-validation step is
+        # needed. Caching is on by default and only writes from the default branch.
+
+      - name: Test, lint and build
+        # assembleRelease is included so R8 runs on every push. Shrinking problems only
+        # surface in the release build, and release.yml depends on it succeeding.
+        run: ./gradlew --stacktrace test lint assembleDebug assembleRelease
+
+      - name: Upload reports
+        # Reports are most useful precisely when the build failed.
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: reports
+          path: |
+            app/build/reports/
+            app/build/test-results/
+          if-no-files-found: warn
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

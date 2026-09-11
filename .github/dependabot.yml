@@ -1,0 +1,29 @@
+version: 2
+
+updates:
+  # Actions are pinned to commit SHAs, which cannot be moved. The cost is that security
+  # fixes no longer arrive by themselves, so Dependabot is what keeps the pins current -
+  # it bumps both the SHA and the trailing version comment.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # AndroidX artifacts share a release train, so bumping them one PR at a time both
+      # creates noise and risks mismatched versions inside a single group.
+      androidx:
+        patterns:
+          - 'androidx.*'
+      kotlin:
+        patterns:
+          - 'org.jetbrains.kotlin*'
+          - 'org.jetbrains.kotlinx*'

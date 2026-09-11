@@ -365,6 +365,10 @@ fun openAlarmApp(context: Context) {
     }
 }
 
+// CATEGORY_APP_CALENDAR cannot match FakeHomeActivity, whose filter only declares
+// CATEGORY_HOME, DEFAULT and LAUNCHER. Lint matches on the action alone and ignores the
+// category, so this report is a false positive.
+@SuppressLint("UnsafeImplicitIntentLaunch")
 fun openCalendar(context: Context) {
     try {
         val calendarUri = CalendarContract.CONTENT_URI
