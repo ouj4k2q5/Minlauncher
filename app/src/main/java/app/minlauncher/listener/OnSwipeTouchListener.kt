@@ -20,8 +20,9 @@ Swipe, double tap and long press touch listener for a view
 Source: https://www.tutorialspoint.com/how-to-handle-swipe-gestures-in-kotlin
 */
 
-internal open class OnSwipeTouchListener(c: Context?) : OnTouchListener {
+internal open class OnSwipeTouchListener(c: Context?, v: View) : OnTouchListener {
     private var longPressOn = false
+    private val view = v
 
     //    private var doubleTapOn = false
     private val gestureDetector: GestureDetector
@@ -41,10 +42,7 @@ internal open class OnSwipeTouchListener(c: Context?) : OnTouchListener {
         }
 
         override fun onSingleTapUp(e: MotionEvent): Boolean {
-//            if (doubleTapOn) {
-//                doubleTapOn = false
-//                onTripleClick()
-//            }
+            view.performClick()
             onClick()
             return super.onSingleTapUp(e)
         }
@@ -62,6 +60,7 @@ internal open class OnSwipeTouchListener(c: Context?) : OnTouchListener {
         }
 
         override fun onLongPress(e: MotionEvent) {
+            view.performLongClick()
             longPressOn = true
             GlobalScope.launch {
                 delay(Constants.LONG_PRESS_DELAY_MS)

@@ -1,5 +1,6 @@
 package app.minlauncher.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
@@ -198,6 +199,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
         // }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initSwipeTouchListener() {
         val context = requireContext()
         binding.mainLayout.setOnTouchListener(getSwipeGestureListener(context))
@@ -603,7 +605,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
     private fun textOnLongClick(view: View) = onLongClick(view)
 
     private fun getSwipeGestureListener(context: Context): View.OnTouchListener {
-        return object : OnSwipeTouchListener(context) {
+        return object : OnSwipeTouchListener(context, binding.mainLayout) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
                 openSwipeLeftApp()
