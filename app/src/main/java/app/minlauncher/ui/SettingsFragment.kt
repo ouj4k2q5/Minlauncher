@@ -30,6 +30,7 @@ import app.minlauncher.helper.isTablet
 import app.minlauncher.helper.openAppInfo
 import app.minlauncher.helper.setPlainWallpaperByTheme
 import app.minlauncher.helper.showToast
+import kotlin.math.roundToInt
 
 class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListener {
 
@@ -363,11 +364,11 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
     private fun adjustTextSizePreview(delta: Float) {
         val maxScale = if (isTablet(requireContext())) 2.0f else 1.5f
         val current = if (pendingTextSizeScale > 0) pendingTextSizeScale else prefs.textSizeScale
-        val newScale = Math.round((current + delta) * 10f) / 10f
+        val newScale = ((current + delta) * 10f).roundToInt() / 10f
         val clamped = newScale.coerceIn(0.5f, maxScale)
         if (clamped == current) return
         pendingTextSizeScale = clamped
-        val formatted = String.format("%.1f", clamped)
+        val formatted = "%.1f".format(clamped)
         binding.textSizeValue.text = formatted
         binding.textSizeCurrent.text = formatted
     }
@@ -422,7 +423,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, View.OnLongClickL
     }
 
     private fun populateTextSize() {
-        val formatted = String.format("%.1f", prefs.textSizeScale)
+        val formatted = "%.1f".format(prefs.textSizeScale)
         binding.textSizeValue.text = formatted
         binding.textSizeCurrent.text = formatted
     }
