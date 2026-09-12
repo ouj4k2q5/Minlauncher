@@ -36,6 +36,7 @@ internal open class ViewSwipeTouchListener(c: Context?, v: View) : OnTouchListen
         }
 
         override fun onSingleTapUp(e: MotionEvent): Boolean {
+            view.performClick()
             onClick(view)
             return super.onSingleTapUp(e)
         }
@@ -46,6 +47,7 @@ internal open class ViewSwipeTouchListener(c: Context?, v: View) : OnTouchListen
         }
 
         override fun onLongPress(e: MotionEvent) {
+            view.performLongClick()
             longPressOn = true
             GlobalScope.launch {
                 delay(Constants.LONG_PRESS_DELAY_MS)
