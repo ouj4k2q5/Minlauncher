@@ -129,18 +129,18 @@ class AppDrawerFragment : BaseFragment() {
 
     private fun isCjkKeyboard(): Boolean {
         cachedIsCjkKeyboard?.let { return it }
-        val result = try {
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            val subtype = imm.currentInputMethodSubtype
-            val language = when {
-                subtype == null -> ""
-                subtype.languageTag.isNotEmpty() -> subtype.languageTag // e.g. "zh-CN", "ja-JP", "en-US"
-                else -> subtype.locale // deprecated fallback, e.g. "zh_CN"
+
+        val result = runCatching {
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val subtype = imm?.currentInputMethodSubtype ?: return@runCatching false
+
+            val language = subtype.languageTag.ifEmpty {
+                @Suppress("DEPRECATION") subtype.locale
             }
+
             language.startsWith("zh") || language.startsWith("ja") || language.startsWith("ko")
-        } catch (e: Exception) {
-            false
-        }
+        }.getOrElse { false }
+
         cachedIsCjkKeyboard = result
         return result
     }
