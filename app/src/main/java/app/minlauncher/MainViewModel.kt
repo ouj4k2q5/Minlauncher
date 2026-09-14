@@ -25,6 +25,8 @@ import app.minlauncher.helper.isPackageInstalled
 import app.minlauncher.helper.isPrivateSpaceLocked
 import app.minlauncher.helper.showToast
 import app.minlauncher.helper.usageStats.EventLogWrapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -32,6 +34,7 @@ import java.util.Calendar
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val appContext by lazy { application.applicationContext }
     private val prefs = Prefs(appContext)
+    private var screenTimeJob: Job? = null
 
     val firstOpen = MutableLiveData<Boolean>()
     val refreshHome = MutableLiveData<Boolean>()
@@ -412,28 +415,29 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getTodaysScreenTime() {
         if (prefs.screenTimeLastUpdated.hasBeenMinutes(1).not()) return
+        if (screenTimeJob?.isActive == true) return
 
-        val eventLogWrapper = EventLogWrapper(
-            appContext
-        )
-        // Start of today in millis
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        val startTime = calendar.timeInMillis
-        val endTime = System.currentTimeMillis()
+        screenTimeJob = viewModelScope.launch(Dispatchers.IO) {
+            val eventLogWrapper = EventLogWrapper(appContext)
+            // Start of today in millis
+            val calendar = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            val startTime = calendar.timeInMillis
+            val endTime = System.currentTimeMillis()
 
-        val timeSpent = eventLogWrapper.aggregateSimpleUsageStats(
-            eventLogWrapper.aggregateForegroundStats(
-                eventLogWrapper.getForegroundStatsByTimestamps(startTime, endTime)
+            val timeSpent = eventLogWrapper.aggregateSimpleUsageStats(
+                eventLogWrapper.aggregateForegroundStats(
+                    eventLogWrapper.getForegroundStatsByTimestamps(startTime, endTime)
+                )
             )
-        )
-        val viewTimeSpent = appContext.formattedTimeSpent(timeSpent)
-        screenTimeValue.postValue(viewTimeSpent)
-        prefs.screenTimeLastUpdated = endTime
+            val viewTimeSpent = appContext.formattedTimeSpent(timeSpent)
+            screenTimeValue.postValue(viewTimeSpent)
+            prefs.screenTimeLastUpdated = endTime
+        }
     }
 
     fun getPrivateSpaceAppList() {
